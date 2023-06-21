@@ -15,7 +15,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String google_image_path = "assets/images/btn_google_dark_normal_ios.svg";
+  static const String GOOGLE_IMAGE_PATH =
+      "assets/images/btn_google_dark_normal_ios.svg";
   final _formKey = GlobalKey<FormState>();
   var logger = Logger(
     filter: null, // Use the default LogFilter (-> only log in debug mode)
@@ -123,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             IconButton(
                 icon: SvgPicture.asset(
-                  google_image_path,
+                  GOOGLE_IMAGE_PATH,
                 ),
                 onPressed: () async {
                   await FirebaseService.googleAuthSignIn();
