@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "994677489483",
+    "project_id": "girlfriend-gpt-by-flutter",
+    "storage_bucket": "girlfriend-gpt-by-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994677489483:android:0532d9638ca94513e332ce",
+        "android_client_info": {
+          "package_name": "com.example.girlfriend_gpt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "994677489483-p1um7ddqi9997de3i5kigahmjrptjouu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDz2sFLWtXnbY4qxu0egmOahHH8ZsvXV0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "994677489483-p1um7ddqi9997de3i5kigahmjrptjouu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

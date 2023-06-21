@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>994677489483-flvtcfllo34lkilmrlojc308tdmugllj.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.994677489483-flvtcfllo34lkilmrlojc308tdmugllj</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAsLbUWw8wsmMzZb8EGu3kj2odJ-KPnLvQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>994677489483</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.girlfriendGpt</string>
+	<key>PROJECT_ID</key>
+	<string>girlfriend-gpt-by-flutter</string>
+	<key>STORAGE_BUCKET</key>
+	<string>girlfriend-gpt-by-flutter.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:994677489483:ios:74a3ad19a212c73ee332ce</string>
+</dict>
+</plist>
