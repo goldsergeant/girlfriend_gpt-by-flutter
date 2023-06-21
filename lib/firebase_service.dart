@@ -1,15 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 
-class AuthManage {
-  var logger = Logger(
+class FirebaseService {
+  static var logger = Logger(
     filter: null, // Use the default LogFilter (-> only log in debug mode)
     printer: PrettyPrinter(), // Use the PrettyPrinter to format and print log
     output: null, // Use the default LogOutput (-> send everything to console)
   );
 
   /// 회원가입
-  Future<bool> createUser(String email, String pw) async {
+  static Future<bool> createUser(String email, String pw) async {
     try {
       final credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -31,26 +33,21 @@ class AuthManage {
   }
 
   /// 로그인
-  Future<bool> signIn(String email, String pw) async {
+  static Future signIn(String email, String pw) async {
     try {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: pw);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        logger.w('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        logger.w('Wrong password provided for that user.');
-      }
+      logger.w(e.code);
+      rethrow;
     } catch (e) {
       logger.e(e);
-      return false;
+      rethrow;
     }
-    // authPersistence(); // 인증 영속
-    return true;
   }
 
   /// 로그아웃
-  void signOut() async {
+  static void signOut() async {
     await FirebaseAuth.instance.signOut();
   }
 
@@ -60,13 +57,13 @@ class AuthManage {
   }
 
   /// 유저 삭제
-  Future<void> deleteUser(String email) async {
+  static Future<void> deleteUser(String email) async {
     final user = FirebaseAuth.instance.currentUser;
     await user?.delete();
   }
 
   /// 현재 유저 정보 조회
-  User? getUser() {
+  static User? getUser() {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       // Name, email address, and profile photo URL
@@ -85,7 +82,7 @@ class AuthManage {
   }
 
   /// 공급자로부터 유저 정보 조회
-  User? getUserFromSocial() {
+  static User? getUserFromSocial() {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       for (final providerProfile in user.providerData) {
@@ -105,20 +102,35 @@ class AuthManage {
   }
 
   /// 유저 이름 업데이트
-  Future<void> updateProfileName(String name) async {
+  static Future<void> updateProfileName(String name) async {
     final user = FirebaseAuth.instance.currentUser;
     await user?.updateDisplayName(name);
   }
 
   /// 유저 url 업데이트
-  Future<void> updateProfileUrl(String url) async {
+  static Future<void> updateProfileUrl(String url) async {
     final user = FirebaseAuth.instance.currentUser;
     await user?.updatePhotoURL(url);
   }
 
   /// 비밀번호 초기화 메일보내기
-  Future<void> sendPasswordResetEmail(String email) async {
+  static Future<void> sendPasswordResetEmail(String email) async {
     await FirebaseAuth.instance.setLanguageCode("kr");
     await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  }
+
+  static Future<UserCredential> googleAuthSignIn() async {
+    //구글 Sign in 플로우 오픈
+    final GoogleSignInAccount? googleUser = await GoogleSignIn()?.signIn();
+
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    //읽어온 인증정보로 파이어베이스 인증 로그인
+    final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
+
+    //파이어 베이스 Signin하고 결과(userCredential) 리턴
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

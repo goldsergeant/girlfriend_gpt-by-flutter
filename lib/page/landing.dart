@@ -19,7 +19,7 @@ class LandingPage extends StatelessWidget {
           print("data exists");
           return HomePage();
         } else {
-          return LoginWidget();
+          return LoginPage();
         }
       },
     ));
