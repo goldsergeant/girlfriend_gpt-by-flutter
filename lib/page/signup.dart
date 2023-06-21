@@ -1,20 +1,19 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:girlfriend_gpt/page/landing.dart';
-import 'package:girlfriend_gpt/page/signup.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 
 import '../firebase_service.dart';
+import 'landing.dart';
 
-class LoginPage extends StatefulWidget {
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
+
   @override
-  _LoginPageState createState() => _LoginPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
   String google_image_path = "assets/images/btn_google_dark_normal_ios.svg";
   final _formKey = GlobalKey<FormState>();
   var logger = Logger(
@@ -22,25 +21,21 @@ class _LoginPageState extends State<LoginPage> {
     printer: PrettyPrinter(), // Use the PrettyPrinter to format and print log
     output: null, // Use the default LogOutput (-> send everything to console)
   );
-
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
   void goLandingPage() {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LandingPage()));
-  }
-
-  void goSignUpPage() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SignUpPage()));
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => LandingPage()),
+        (route) => false);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('로그인'),
+        title: Text('회원가입'),
         centerTitle: true,
       ),
       body: Container(
@@ -85,36 +80,25 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                     SizedBox(height: 20.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () async {
-                            String email = _emailController.text;
-                            String password = _passwordController.text;
+                    ElevatedButton(
+                      onPressed: () async {
+                        String email = _emailController.text;
+                        String password = _passwordController.text;
 
-                            if (_formKey.currentState!.validate()) {
-                              try {
-                                await FirebaseService.signIn(email, password);
-                                goLandingPage();
-                              } catch (e) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(e.toString())));
-                              }
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('유효하지 않은 값을 고쳐주세요.')));
-                            }
-                          },
-                          child: Text('로그인'),
-                        ),
-                        SizedBox(
-                          width: 20.0,
-                        ),
-                        ElevatedButton(
-                            onPressed: () => goSignUpPage(),
-                            child: Text('회원가입'))
-                      ],
+                        if (_formKey.currentState!.validate()) {
+                          try {
+                            await FirebaseService.signUp(email, password);
+                            Navigator.pop(context);
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(e.toString())));
+                          }
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('유효하지 않은 값을 고쳐주세요.')));
+                        }
+                      },
+                      child: Text('회원가입'),
                     ),
                   ],
                 )),

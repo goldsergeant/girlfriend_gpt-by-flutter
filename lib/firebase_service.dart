@@ -11,7 +11,7 @@ class FirebaseService {
   );
 
   /// 회원가입
-  static Future<bool> createUser(String email, String pw) async {
+  static Future signUp(String email, String pw) async {
     try {
       final credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -19,17 +19,12 @@ class FirebaseService {
         password: pw,
       );
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        logger.w('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        logger.w('The account already exists for that email.');
-      }
+      logger.w(e);
+      rethrow;
     } catch (e) {
       logger.e(e);
-      return false;
+      rethrow;
     }
-    // authPersistence(); // 인증 영속
-    return true;
   }
 
   /// 로그인
