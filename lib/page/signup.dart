@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:girlfriend_gpt/secure_storage_service.dart';
 import 'package:logger/logger.dart';
 
 import '../firebase_service.dart';
@@ -88,6 +89,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         if (_formKey.currentState!.validate()) {
                           try {
                             await FirebaseService.signUp(email, password);
+                            await SecureStorageService.writeUserInfo(
+                                email, password);
                             Navigator.pop(context);
                           } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(

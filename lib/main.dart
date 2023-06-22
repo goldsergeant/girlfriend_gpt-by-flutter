@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:girlfriend_gpt/firebase_service.dart';
 import 'package:girlfriend_gpt/page/landing.dart';
+import 'package:girlfriend_gpt/secure_storage_service.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -10,6 +12,15 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  String? userInfo = await SecureStorageService.readUserInfo();
+
+  if (userInfo != null) {
+    String email = userInfo.split(" ")[1];
+    String password = userInfo.split(" ")[3];
+
+    FirebaseService.signIn(email, password);
+  }
 // Ideal time to initialize
   runApp(const MyApp());
 }

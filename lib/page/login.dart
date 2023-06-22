@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:girlfriend_gpt/page/landing.dart';
 import 'package:girlfriend_gpt/page/signup.dart';
+import 'package:girlfriend_gpt/secure_storage_service.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 
@@ -97,6 +98,8 @@ class _LoginPageState extends State<LoginPage> {
                             if (_formKey.currentState!.validate()) {
                               try {
                                 await FirebaseService.signIn(email, password);
+                                await SecureStorageService.writeUserInfo(
+                                    email, password);
                                 goLandingPage();
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
