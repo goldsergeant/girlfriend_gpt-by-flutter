@@ -22,18 +22,25 @@ Future<void> main() async {
     FirebaseService.signIn(email, password);
   }
 // Ideal time to initialize
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Color mainColor = Color.fromARGB(255, 233, 145, 175);
+  MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor: Colors.pinkAccent,
-        useMaterial3: true,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: mainColor,
+        ),
+        textTheme: TextTheme(
+          // displayLarge: TextStyle(fontSize: 72, fontWeight: FontWeight.bold),
+          titleLarge: TextStyle(
+              fontSize: 30, fontStyle: FontStyle.italic, color: mainColor),
+        ),
       ),
       home: const LandingPage(),
     );

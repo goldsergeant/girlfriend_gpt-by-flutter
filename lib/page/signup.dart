@@ -46,7 +46,7 @@ class _SignUpPageState extends State<SignUpPage> {
           children: <Widget>[
             Text(
               'Girlfriend GPT',
-              style: TextStyle(fontSize: 25.0),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             SizedBox(
               height: 70.0,

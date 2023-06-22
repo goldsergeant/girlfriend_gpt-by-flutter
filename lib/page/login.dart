@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             Text(
               'Girlfriend GPT',
-              style: TextStyle(fontSize: 25.0),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             SizedBox(
               height: 70.0,
@@ -128,6 +128,9 @@ class _LoginPageState extends State<LoginPage> {
             IconButton(
                 icon: SvgPicture.asset(
                   GOOGLE_IMAGE_PATH,
+                  height: 24,
+                  width: 24,
+                  fit: BoxFit.scaleDown,
                 ),
                 onPressed: () async {
                   await FirebaseService.googleAuthSignIn();
