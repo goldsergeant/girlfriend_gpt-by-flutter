@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:girlfriend_gpt/firebase_service.dart';
+import 'package:girlfriend_gpt/firestore_service.dart';
+import 'package:girlfriend_gpt/main.dart';
+
+import '../model/user.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
   static const String BOYFRIEND_IMAGE_PATH = "assets/images/gym_rat_man.jpg";
   static const String GIRLFRIEND_IMAGE_PATH = "assets/images/cuty_any_girl.jpg";
+  final _dialogTextFieldController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   Widget boyFriendButton() {
     return FittedBox(
@@ -36,8 +44,56 @@ class HomePage extends StatelessWidget {
     ));
   }
 
+  String? _validator(String? nickName) {
+    if (nickName!.replaceAll(' ', '').isEmpty) {
+      return '닉네임을 입력해주세요.';
+    }
+    return null;
+  }
+
+  Future<void> _displayTextInputDialog() async {
+    return showDialog(
+      context: navigatorKey.currentContext!,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('닉네임'),
+          content: Form(
+            key: _formKey,
+            child: TextFormField(
+              validator: _validator,
+              controller: _dialogTextFieldController,
+              decoration: InputDecoration(hintText: "닉네임"),
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    await FireStoreService.writeUserInfo(
+                        _dialogTextFieldController.text);
+                    _dialogTextFieldController.dispose();
+                    Navigator.pop(context);
+                  }
+                },
+                child: Text('입력')),
+          ],
+        );
+      },
+    );
+  }
+
+  _buildDialogByUserData(BuildContext context) async {
+    String uid = FirebaseService.getUser()!.uid;
+    User? user = await FireStoreService.getUserInfo(uid);
+    if (user == null) {
+      _displayTextInputDialog();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    _buildDialogByUserData(context);
     return Scaffold(
         appBar: AppBar(
           title: Text('GirlFriend GPT'),

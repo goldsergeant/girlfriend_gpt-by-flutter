@@ -28,6 +28,14 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   void goLandingPage() {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => LandingPage()));
@@ -36,6 +44,26 @@ class _LoginPageState extends State<LoginPage> {
   void goSignUpPage() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => SignUpPage()));
+  }
+
+  void _submit() async {
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    if (_formKey.currentState!.validate()) {
+      try {
+        await FirebaseService.signIn(email, password);
+        // await SecureStorageService.writeUserInfo(
+        //     email, password);
+        goLandingPage();
+      } catch (e) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.toString())));
+      }
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('유효하지 않은 값을 고쳐주세요.')));
+    }
   }
 
   @override
@@ -58,70 +86,52 @@ class _LoginPageState extends State<LoginPage> {
               height: 70.0,
             ),
             Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: _emailController,
-                      decoration: InputDecoration(
-                        labelText: 'Email',
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty || !EmailValidator.validate(value)) {
+                        return 'invalid email';
+                      } else
+                        return null;
+                    },
+                  ),
+                  SizedBox(height: 12.0),
+                  TextFormField(
+                    controller: _passwordController,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty || value.length < 6) {
+                        return 'invalid password';
+                      } else
+                        return null;
+                    },
+                  ),
+                  SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => _submit(),
+                        child: Text('로그인'),
                       ),
-                      validator: (value) {
-                        if (value!.isEmpty || !EmailValidator.validate(value)) {
-                          return 'invalid email';
-                        } else
-                          return null;
-                      },
-                    ),
-                    SizedBox(height: 12.0),
-                    TextFormField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
+                      SizedBox(
+                        width: 20.0,
                       ),
-                      validator: (value) {
-                        if (value!.isEmpty || value.length < 6) {
-                          return 'invalid password';
-                        } else
-                          return null;
-                      },
-                    ),
-                    SizedBox(height: 20.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () async {
-                            String email = _emailController.text;
-                            String password = _passwordController.text;
-
-                            if (_formKey.currentState!.validate()) {
-                              try {
-                                await FirebaseService.signIn(email, password);
-                                await SecureStorageService.writeUserInfo(
-                                    email, password);
-                                goLandingPage();
-                              } catch (e) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(e.toString())));
-                              }
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('유효하지 않은 값을 고쳐주세요.')));
-                            }
-                          },
-                          child: Text('로그인'),
-                        ),
-                        SizedBox(
-                          width: 20.0,
-                        ),
-                        ElevatedButton(
-                            onPressed: () => goSignUpPage(),
-                            child: Text('회원가입'))
-                      ],
-                    ),
-                  ],
-                )),
+                      ElevatedButton(
+                          onPressed: () => goSignUpPage(), child: Text('회원가입'))
+                    ],
+                  ),
+                ],
+              ),
+            ),
             Container(
               height: 30,
             ),

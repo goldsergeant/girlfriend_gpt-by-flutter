@@ -18,7 +18,6 @@ class LandingPage extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
         if (snapshot.hasData) {
-          print("data exists");
           return HomePage();
         } else {
           return LoginPage();
