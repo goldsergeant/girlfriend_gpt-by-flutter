@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: navigatorKey,
-      title: 'Flutter Demo',
+      title: 'Girlfriend GPT',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: mainColor,
