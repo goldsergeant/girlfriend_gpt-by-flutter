@@ -42,91 +42,98 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('회원가입'),
-        centerTitle: true,
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Girlfriend GPT',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            SizedBox(
-              height: 70.0,
-            ),
-            Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: _emailController,
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty || !EmailValidator.validate(value)) {
-                          return 'invalid email';
-                        } else
-                          return null;
-                      },
-                    ),
-                    SizedBox(height: 12.0),
-                    TextFormField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty || value.length < 6) {
-                          return 'invalid password';
-                        } else
-                          return null;
-                      },
-                    ),
-                    SizedBox(height: 20.0),
-                    ElevatedButton(
-                      onPressed: () async {
-                        String email = _emailController.text;
-                        String password = _passwordController.text;
-
-                        if (_formKey.currentState!.validate()) {
-                          try {
-                            await FirebaseService.signUp(email, password);
-                            await SecureStorageService.writeUserInfo(
-                                email, password);
-                            Navigator.pop(context);
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(e.toString())));
-                          }
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('유효하지 않은 값을 고쳐주세요.')));
-                        }
-                      },
-                      child: Text('회원가입'),
-                    ),
-                  ],
-                )),
-            Container(
-              height: 30,
-            ),
-            IconButton(
-                icon: SvgPicture.asset(
-                  google_image_path,
+    return Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage("assets/images/cherryblossom.gif"),
+        )),
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('회원가입'),
+            centerTitle: true,
+          ),
+          body: Container(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Girlfriend GPT',
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
-                onPressed: () async {
-                  await FirebaseService.googleAuthSignIn();
-                  goLandingPage();
-                }),
-          ],
-        ),
-      ),
-    );
+                SizedBox(
+                  height: 70.0,
+                ),
+                Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: _emailController,
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty ||
+                                !EmailValidator.validate(value)) {
+                              return 'invalid email';
+                            } else
+                              return null;
+                          },
+                        ),
+                        SizedBox(height: 12.0),
+                        TextFormField(
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty || value.length < 6) {
+                              return 'invalid password';
+                            } else
+                              return null;
+                          },
+                        ),
+                        SizedBox(height: 20.0),
+                        ElevatedButton(
+                          onPressed: () async {
+                            String email = _emailController.text;
+                            String password = _passwordController.text;
+
+                            if (_formKey.currentState!.validate()) {
+                              try {
+                                await FirebaseService.signUp(email, password);
+                                await SecureStorageService.writeUserInfo(
+                                    email, password);
+                                Navigator.pop(context);
+                              } catch (e) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(e.toString())));
+                              }
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('유효하지 않은 값을 고쳐주세요.')));
+                            }
+                          },
+                          child: Text('회원가입'),
+                        ),
+                      ],
+                    )),
+                Container(
+                  height: 30,
+                ),
+                IconButton(
+                    icon: SvgPicture.asset(
+                      google_image_path,
+                    ),
+                    onPressed: () async {
+                      await FirebaseService.googleAuthSignIn();
+                      goLandingPage();
+                    }),
+              ],
+            ),
+          ),
+        ));
   }
 }

@@ -68,87 +68,96 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('로그인'),
-        centerTitle: true,
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Girlfriend GPT',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            SizedBox(
-              height: 70.0,
-            ),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty || !EmailValidator.validate(value)) {
-                        return 'invalid email';
-                      } else
-                        return null;
-                    },
-                  ),
-                  SizedBox(height: 12.0),
-                  TextFormField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty || value.length < 6) {
-                        return 'invalid password';
-                      } else
-                        return null;
-                    },
-                  ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+    return Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage("assets/images/cherryblossom.gif"),
+        )),
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('로그인'),
+            centerTitle: true,
+          ),
+          body: Container(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Girlfriend GPT',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                SizedBox(
+                  height: 70.0,
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
                     children: [
-                      ElevatedButton(
-                        onPressed: () => _submit(),
-                        child: Text('로그인'),
+                      TextFormField(
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty ||
+                              !EmailValidator.validate(value)) {
+                            return 'invalid email';
+                          } else
+                            return null;
+                        },
                       ),
-                      SizedBox(
-                        width: 20.0,
+                      SizedBox(height: 12.0),
+                      TextFormField(
+                        obscureText: true,
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty || value.length < 6) {
+                            return 'invalid password';
+                          } else
+                            return null;
+                        },
                       ),
-                      ElevatedButton(
-                          onPressed: () => goSignUpPage(), child: Text('회원가입'))
+                      SizedBox(height: 20.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () => _submit(),
+                            child: Text('로그인'),
+                          ),
+                          SizedBox(
+                            width: 20.0,
+                          ),
+                          ElevatedButton(
+                              onPressed: () => goSignUpPage(),
+                              child: Text('회원가입'))
+                        ],
+                      ),
                     ],
                   ),
-                ],
-              ),
-            ),
-            Container(
-              height: 30,
-            ),
-            IconButton(
-                icon: SvgPicture.asset(
-                  GOOGLE_IMAGE_PATH,
-                  height: 24,
-                  width: 24,
-                  fit: BoxFit.scaleDown,
                 ),
-                onPressed: () async {
-                  await FirebaseService.googleAuthSignIn();
-                  goLandingPage();
-                }),
-          ],
-        ),
-      ),
-    );
+                Container(
+                  height: 30,
+                ),
+                IconButton(
+                    icon: SvgPicture.asset(
+                      GOOGLE_IMAGE_PATH,
+                      height: 24,
+                      width: 24,
+                      fit: BoxFit.scaleDown,
+                    ),
+                    onPressed: () async {
+                      await FirebaseService.googleAuthSignIn();
+                      goLandingPage();
+                    }),
+              ],
+            ),
+          ),
+        ));
   }
 }

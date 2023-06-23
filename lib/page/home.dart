@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:girlfriend_gpt/firebase_service.dart';
 import 'package:girlfriend_gpt/firestore_service.dart';
 import 'package:girlfriend_gpt/main.dart';
+import 'package:girlfriend_gpt/page/botfriend_chat.dart';
 
 import '../model/user.dart';
 
@@ -15,16 +16,20 @@ class HomePage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
   Widget boyFriendButton() {
+    String title = '나만 바라봐주는 남자친구';
     return FittedBox(
         child: InkWell(
-      onTap: () => Null,
+      onTap: () => Navigator.push(
+          navigatorKey.currentState!.context,
+          MaterialPageRoute(
+              builder: (context) => BoyfriendChatPage(title: title))),
       child: Column(children: [
         Image.asset(
           BOYFRIEND_IMAGE_PATH,
           width: 100,
           height: 100,
         ),
-        Text('나만 바라봐주는 남자친구'),
+        Text(title),
       ]),
     ));
   }
@@ -94,16 +99,23 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _buildDialogByUserData(context);
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('GirlFriend GPT'),
-          centerTitle: true,
-        ),
-        body: SafeArea(
-            child: Center(
-                child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [boyFriendButton(), girlfriendButton()],
-        ))));
+    return Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage("assets/images/cherryblossom.gif"),
+        )),
+        child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              title: Text('GirlFriend GPT'),
+              centerTitle: true,
+            ),
+            body: SafeArea(
+                child: Center(
+                    child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [boyFriendButton(), girlfriendButton()],
+            )))));
   }
 }

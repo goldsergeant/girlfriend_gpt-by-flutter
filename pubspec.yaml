@@ -45,6 +45,7 @@ dependencies:
   cloud_firestore: ^4.8.1
   json_annotation: ^4.8.1
   build_runner: ^2.4.5
+  flutter_chat_ui: ^1.6.8
 
 dev_dependencies:
   flutter_test:

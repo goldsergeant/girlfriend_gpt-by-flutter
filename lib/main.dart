@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: mainColor,
         ),
+        scaffoldBackgroundColor: Colors.transparent,
         textTheme: TextTheme(
           // displayLarge: TextStyle(fontSize: 72, fontWeight: FontWeight.bold),
           titleLarge: TextStyle(
