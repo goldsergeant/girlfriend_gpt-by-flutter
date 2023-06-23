@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:girlfriend_gpt/firebase_service.dart';
+import 'package:girlfriend_gpt/services/firebase_service.dart';
 import 'package:girlfriend_gpt/page/home.dart';
 
 import 'login.dart';

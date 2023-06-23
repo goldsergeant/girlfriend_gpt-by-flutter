@@ -1,3 +1,7 @@
+import 'package:girlfriend_gpt/model/chat_gpt/response/usage.dart';
+
+import 'choices.dart';
+
 class GptResponse {
   String? id;
   String? object;

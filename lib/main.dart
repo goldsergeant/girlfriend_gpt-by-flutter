@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:girlfriend_gpt/firebase_service.dart';
+import 'package:girlfriend_gpt/services/firebase_service.dart';
 import 'package:girlfriend_gpt/page/landing.dart';
-import 'package:girlfriend_gpt/secure_storage_service.dart';
+import 'package:girlfriend_gpt/services/secure_storage_service.dart';
+import 'env/env.dart';
 import 'firebase_options.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dart_openai/dart_openai.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
+  OpenAI.apiKey = Env.apiKey;
   WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
   await Firebase.initializeApp(
@@ -38,6 +40,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: mainColor,
         ),
+        primaryColor: mainColor,
         scaffoldBackgroundColor: Colors.transparent,
         textTheme: TextTheme(
           // displayLarge: TextStyle(fontSize: 72, fontWeight: FontWeight.bold),
@@ -46,7 +49,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: const LandingPage(),
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

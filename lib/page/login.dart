@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:girlfriend_gpt/page/landing.dart';
 import 'package:girlfriend_gpt/page/signup.dart';
-import 'package:girlfriend_gpt/secure_storage_service.dart';
+import 'package:girlfriend_gpt/services/secure_storage_service.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 
-import '../firebase_service.dart';
+import '../services/firebase_service.dart';
 
 class LoginPage extends StatefulWidget {
   @override

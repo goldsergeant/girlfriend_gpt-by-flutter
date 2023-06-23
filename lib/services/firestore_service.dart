@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:girlfriend_gpt/firebase_service.dart';
+import 'package:girlfriend_gpt/services/firebase_service.dart';
 import 'package:girlfriend_gpt/model/user.dart';
 
 class FireStoreService {

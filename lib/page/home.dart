@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:girlfriend_gpt/firebase_service.dart';
-import 'package:girlfriend_gpt/firestore_service.dart';
+import 'package:girlfriend_gpt/services/firebase_service.dart';
+import 'package:girlfriend_gpt/services/firestore_service.dart';
 import 'package:girlfriend_gpt/main.dart';
-import 'package:girlfriend_gpt/page/botfriend_chat.dart';
+import 'package:girlfriend_gpt/page/boyfriend_chat.dart';
 
 import '../model/user.dart';
 
@@ -19,10 +19,8 @@ class HomePage extends StatelessWidget {
     String title = '나만 바라봐주는 남자친구';
     return FittedBox(
         child: InkWell(
-      onTap: () => Navigator.push(
-          navigatorKey.currentState!.context,
-          MaterialPageRoute(
-              builder: (context) => BoyfriendChatPage(title: title))),
+      onTap: () => Navigator.push(navigatorKey.currentState!.context,
+          MaterialPageRoute(builder: (context) => BoyfriendChatPage())),
       child: Column(children: [
         Image.asset(
           BOYFRIEND_IMAGE_PATH,
