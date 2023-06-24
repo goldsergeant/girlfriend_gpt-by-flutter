@@ -5,7 +5,7 @@ class OpenAiService {
 
   static sendToBoyfriend(String message) async {
     var response = '';
-    OpenAIChatCompletion
-    return completion.choices[0].text;
+    // OpenAIChatCompletion
+    // return completion.choices[0].text;
   }
 }

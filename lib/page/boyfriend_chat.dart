@@ -32,7 +32,7 @@ class _BoyfriendChatPageState extends State<BoyfriendChatPage> {
     _addMessage(bubble);
     _textController.text = '';
 
-    String response = await OpenAiService.sendToBoyfriend(message);
+    String? response = await OpenAiService.sendToBoyfriend(message);
 
     print(response);
     _scrollToLastMessage();
@@ -117,27 +117,25 @@ class _BoyfriendChatPageState extends State<BoyfriendChatPage> {
           image: AssetImage("assets/images/cherryblossom.gif"),
         )),
         child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            title: Text('나만 바라봐주는 남자친구'),
-            centerTitle: true,
-          ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              title: Text('나만 바라봐주는 남자친구'),
+              centerTitle: true,
+            ),
+            body: Stack(
+              children: [
+                SingleChildScrollView(
                   physics: ScrollPhysics(),
                   controller: _scrollController,
-                  child: Column(
-                    children: _messages,
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 100.0),
+                    child: Column(
+                      children: _messages,
+                    ),
                   ),
                 ),
-              ),
-              _buildMessageBar()
-            ],
-          ),
-          // This trailing comma makes auto-formatting nicer for build methods.
-        ));
+                _buildMessageBar()
+              ],
+            )));
   }
 }
