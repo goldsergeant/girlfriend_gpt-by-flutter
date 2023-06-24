@@ -30,12 +30,12 @@ class _BoyfriendChatPageState extends State<BoyfriendChatPage> {
     );
 
     _addMessage(bubble);
-    _textController.text = '';
 
     String? response = await OpenAiService.sendToBoyfriend(message);
 
     print(response);
     _scrollToLastMessage();
+    _textController.text = '';
   }
 
   void _addMessage(Widget widget) {
