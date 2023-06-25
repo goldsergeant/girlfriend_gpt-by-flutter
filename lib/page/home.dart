@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:girlfriend_gpt/page/girlfriend_chat.dart';
 import 'package:girlfriend_gpt/services/firebase_service.dart';
-import 'package:girlfriend_gpt/services/firestore_service.dart';
 import 'package:girlfriend_gpt/main.dart';
 import 'package:girlfriend_gpt/page/boyfriend_chat.dart';
-
-import '../model/user.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -56,9 +54,9 @@ class HomePage extends StatelessWidget {
     return null;
   }
 
-  Future<void> _displayTextInputDialog() async {
+  Future<void> _displayTextInputDialog(BuildContext context) async {
     return showDialog(
-      context: navigatorKey.currentContext!,
+      context: context,
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
@@ -75,7 +73,7 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    await FireStoreService.writeUserInfo(
+                    await FirebaseService.updateProfileName(
                         _dialogTextFieldController.text);
                     _dialogTextFieldController.dispose();
                     Navigator.pop(context);
@@ -89,16 +87,17 @@ class HomePage extends StatelessWidget {
   }
 
   _buildDialogByUserData(BuildContext context) async {
-    String uid = FirebaseService.getUser()!.uid;
-    User? user = await FireStoreService.getUserInfo(uid);
-    if (user == null) {
-      _displayTextInputDialog();
+    String? name = FirebaseService.getUser()!.displayName;
+    if (name == null) {
+      _displayTextInputDialog(context);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    _buildDialogByUserData(context);
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _buildDialogByUserData(context);
+    });
     return Container(
         decoration: BoxDecoration(
             image: DecorationImage(
