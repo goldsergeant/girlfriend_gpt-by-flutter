@@ -1,7 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:girlfriend_gpt/services/firebase_service.dart';
 
-class UserProfilePage extends StatelessWidget {
+class UserProfilePage extends StatefulWidget {
+  const UserProfilePage({super.key});
+
+  @override
+  State<UserProfilePage> createState() => _UserProfilePageState();
+}
+
+class _UserProfilePageState extends State<UserProfilePage> {
+  final _formKey = GlobalKey<FormState>();
+
+  String? _validator(String? nickName) {
+    if (nickName!.replaceAll(' ', '').isEmpty) {
+      return '닉네임을 입력해주세요.';
+    }
+    return null;
+  }
+
+  Future<void> _displayTextInputDialog(BuildContext context) async {
+    final _dialogTextFieldController = TextEditingController();
+
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('수정할 닉네임'),
+          content: Form(
+            key: _formKey,
+            child: TextFormField(
+              validator: _validator,
+              controller: _dialogTextFieldController,
+              decoration: InputDecoration(hintText: "닉네임"),
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    await FirebaseService.updateProfileName(
+                        _dialogTextFieldController.text);
+                    _dialogTextFieldController.dispose();
+                    Navigator.pop(context);
+                    setState(() {});
+                  }
+                },
+                child: Text('입력')),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +84,7 @@ class UserProfilePage extends StatelessWidget {
                   SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
-                      // 프로필 편집 기능 구현
+                      _displayTextInputDialog(context);
                     },
                     child: Text('Edit Profile'),
                   ),
