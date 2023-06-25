@@ -12,16 +12,30 @@ class BoyfriendChatPage extends StatefulWidget {
 
 class _BoyfriendChatPageState extends State<BoyfriendChatPage> {
   final now = new DateTime.now();
+  final String name = '찰스';
+
+  static const String BOYFRIEND_IMAGE_PATH = "assets/images/gym_rat_man.jpg";
   List<Widget> _messages = [];
   TextEditingController _textController = TextEditingController();
   FocusNode _focusNode = FocusNode();
   ScrollController _scrollController = ScrollController();
 
+  _buildBoyfriendImage() {
+    return Container(
+        margin: EdgeInsets.symmetric(horizontal: 5.0),
+        child: Image.asset(
+          BOYFRIEND_IMAGE_PATH,
+          width: 50,
+          height: 50,
+        ));
+  }
+
   _sendMessage(String message) async {
     if (_messages.isEmpty) {
       _addMessage(DateChip(date: now));
     }
-    BubbleNormal bubble = BubbleNormal(
+
+    BubbleNormal myBubble = BubbleNormal(
       text: message,
       isSender: true,
       tail: true,
@@ -29,13 +43,30 @@ class _BoyfriendChatPageState extends State<BoyfriendChatPage> {
       textStyle: TextStyle(color: Colors.white),
     );
 
-    _addMessage(bubble);
-
-    String? response = await OpenAiService.sendToBoyfriend(message);
-
-    print(response);
-    _scrollToLastMessage();
+    _addMessage(myBubble);
     _textController.text = '';
+    String response = await OpenAiService.sendToBoyfriend(message);
+
+    BubbleSpecialOne boyfriendBubble = BubbleSpecialOne(
+      text: response,
+      isSender: false,
+      tail: true,
+      color: Colors.blue,
+      textStyle: TextStyle(color: Colors.white),
+    );
+
+    _addMessage(Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildBoyfriendImage(),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [Text(name), boyfriendBubble],
+        )
+      ],
+    ));
+
+    _scrollToLastMessage();
   }
 
   void _addMessage(Widget widget) {
