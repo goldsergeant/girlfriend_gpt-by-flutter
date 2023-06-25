@@ -161,7 +161,7 @@ class _GirlfriendChatPageState extends State<GirlfriendChatPage> {
                   physics: ScrollPhysics(),
                   controller: _scrollController,
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 0, 100.0),
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 60.0),
                     child: Column(
                       children: _messages,
                     ),
