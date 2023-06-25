@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:girlfriend_gpt/page/girlfriend_chat.dart';
 import 'package:girlfriend_gpt/services/firebase_service.dart';
 import 'package:girlfriend_gpt/services/firestore_service.dart';
 import 'package:girlfriend_gpt/main.dart';
@@ -35,7 +36,8 @@ class HomePage extends StatelessWidget {
   Widget girlfriendButton() {
     return FittedBox(
         child: InkWell(
-      onTap: () => Null,
+      onTap: () => Navigator.push(navigatorKey.currentState!.context,
+          MaterialPageRoute(builder: (context) => GirlfriendChatPage())),
       child: Column(children: [
         Image.asset(
           GIRLFRIEND_IMAGE_PATH,
