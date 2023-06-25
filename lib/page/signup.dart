@@ -106,7 +106,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 await FirebaseService.signUp(email, password);
                                 await SecureStorageService.writeUserInfo(
                                     email, password);
-                                Navigator.pop(context);
+                                goLandingPage();
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(content: Text(e.toString())));
