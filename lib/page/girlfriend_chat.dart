@@ -65,19 +65,21 @@ class _GirlfriendChatPageState extends State<GirlfriendChatPage> {
         )
       ],
     ));
-
-    _scrollToLastMessage();
   }
 
   void _addMessage(Widget widget) {
     setState(() {
       _messages.add(widget);
     });
+
+    _scrollToLastMessage();
   }
 
-  _scrollToLastMessage() async {
-    setState(() {
-      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+  _scrollToLastMessage() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(
+        _scrollController.position.maxScrollExtent,
+      );
     });
   }
 

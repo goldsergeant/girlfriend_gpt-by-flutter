@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:girlfriend_gpt/main.dart';
@@ -44,6 +46,7 @@ class _BoyfriendChatPageState extends State<BoyfriendChatPage> {
     );
 
     _addMessage(myBubble);
+
     _textController.text = '';
     String response = await OpenAiService.sendToBoyfriend(message);
 
@@ -73,11 +76,14 @@ class _BoyfriendChatPageState extends State<BoyfriendChatPage> {
     setState(() {
       _messages.add(widget);
     });
+    _scrollToLastMessage();
   }
 
-  _scrollToLastMessage() async {
-    setState(() {
-      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+  _scrollToLastMessage() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(
+        _scrollController.position.maxScrollExtent,
+      );
     });
   }
 
