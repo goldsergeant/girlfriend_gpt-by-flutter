@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:girlfriend_gpt/auth/auth_dio.dart';
 import 'package:girlfriend_gpt/page/landing.dart';
 import 'package:girlfriend_gpt/page/signup.dart';
 import 'package:girlfriend_gpt/services/secure_storage_service.dart';
@@ -51,14 +52,11 @@ class _LoginPageState extends State<LoginPage> {
     String password = _passwordController.text;
 
     if (_formKey.currentState!.validate()) {
-      try {
-        await FirebaseService.signIn(email, password);
-        // await SecureStorageService.writeUserInfo(
-        //     email, password);
-        goLandingPage();
-      } catch (e) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(e.toString())));
+      var dio = await authDio(context);
+      final response = await dio.post('auth/signin/');
+      print(response);
+      if (response.statusCode == 200) {
+        goSignUpPage();
       }
     } else {
       ScaffoldMessenger.of(context)

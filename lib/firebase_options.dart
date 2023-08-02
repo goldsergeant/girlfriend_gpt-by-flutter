@@ -17,15 +17,24 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,41 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDgGhLiUwUjYZz-UM5SvfGCJIS3WzcjMpo',
-    appId: '1:994677489483:web:9ceb85a214762b67e332ce',
-    messagingSenderId: '994677489483',
-    projectId: 'girlfriend-gpt-by-flutter',
-    authDomain: 'girlfriend-gpt-by-flutter.firebaseapp.com',
-    storageBucket: 'girlfriend-gpt-by-flutter.appspot.com',
-    measurementId: 'G-CTXQCG5FD3',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCDz2sFLWtXnbY4qxu0egmOahHH8ZsvXV0',
     appId: '1:994677489483:android:0532d9638ca94513e332ce',
     messagingSenderId: '994677489483',
     projectId: 'girlfriend-gpt-by-flutter',
     storageBucket: 'girlfriend-gpt-by-flutter.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAsLbUWw8wsmMzZb8EGu3kj2odJ-KPnLvQ',
-    appId: '1:994677489483:ios:74a3ad19a212c73ee332ce',
-    messagingSenderId: '994677489483',
-    projectId: 'girlfriend-gpt-by-flutter',
-    storageBucket: 'girlfriend-gpt-by-flutter.appspot.com',
-    iosClientId: '994677489483-flvtcfllo34lkilmrlojc308tdmugllj.apps.googleusercontent.com',
-    iosBundleId: 'com.example.girlfriendGpt',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAsLbUWw8wsmMzZb8EGu3kj2odJ-KPnLvQ',
-    appId: '1:994677489483:ios:a018643aef385f7ee332ce',
-    messagingSenderId: '994677489483',
-    projectId: 'girlfriend-gpt-by-flutter',
-    storageBucket: 'girlfriend-gpt-by-flutter.appspot.com',
-    iosClientId: '994677489483-op1923e38vut2fsnmt3rj84hudang3mj.apps.googleusercontent.com',
-    iosBundleId: 'com.example.girlfriendGpt.RunnerTests',
   );
 }

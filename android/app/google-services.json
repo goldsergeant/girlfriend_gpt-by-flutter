@@ -14,7 +14,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "994677489483-p1um7ddqi9997de3i5kigahmjrptjouu.apps.googleusercontent.com",
+          "client_id": "994677489483-7176c70f408efdujbmrn1jr4kal35d9k.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +27,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "994677489483-p1um7ddqi9997de3i5kigahmjrptjouu.apps.googleusercontent.com",
+              "client_id": "994677489483-7176c70f408efdujbmrn1jr4kal35d9k.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "994677489483-flvtcfllo34lkilmrlojc308tdmugllj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.girlfriendGpt"
+              }
             }
           ]
         }
