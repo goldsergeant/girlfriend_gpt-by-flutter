@@ -53,7 +53,8 @@ class _LoginPageState extends State<LoginPage> {
 
     if (_formKey.currentState!.validate()) {
       var dio = await authDio(context);
-      final response = await dio.post('auth/signin/');
+      final response = await dio
+          .post('auth/signin/', data: {'email': email, 'password': password});
       print(response);
       if (response.statusCode == 200) {
         goSignUpPage();

@@ -7,7 +7,8 @@ import 'package:girlfriend_gpt/page/login.dart';
 
 Future<Dio> authDio(BuildContext context) async {
   var dio = Dio();
-  dio.options.baseUrl = 'http://127.0.0.1:8000/';
+  dio.options.baseUrl = 'http://10.0.2.2:8000/';
+  dio.options.contentType = 'application/json';
 
   final storage = FlutterSecureStorage();
 
