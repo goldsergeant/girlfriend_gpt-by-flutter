@@ -3,8 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:girlfriend_gpt/auth/auth_dio.dart';
-import 'package:girlfriend_gpt/page/landing.dart';
+import 'package:girlfriend_gpt/page/home.dart';
 import 'package:girlfriend_gpt/page/signup.dart';
+import 'package:girlfriend_gpt/services/auth_service.dart';
 import 'package:girlfriend_gpt/services/secure_storage_service.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
@@ -37,9 +38,9 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void goLandingPage() {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LandingPage()));
+  void goHomePage() {
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
   }
 
   void goSignUpPage() {
@@ -52,12 +53,10 @@ class _LoginPageState extends State<LoginPage> {
     String password = _passwordController.text;
 
     if (_formKey.currentState!.validate()) {
-      var dio = await authDio(context);
-      final response = await dio
-          .post('auth/signin/', data: {'email': email, 'password': password});
+      final response = await AuthService.login(context, email, password);
       print(response);
       if (response.statusCode == 200) {
-        goSignUpPage();
+        goHomePage();
       }
     } else {
       ScaffoldMessenger.of(context)
@@ -152,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     onPressed: () async {
                       await FirebaseService.googleAuthSignIn();
-                      goLandingPage();
+                      goHomePage();
                     }),
               ],
             ),

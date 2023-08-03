@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _buildDialogByUserData(BuildContext context) async {
-    String? name = FirebaseService.getUser()!.displayName;
+    String? name = FirebaseService.getUser()?.displayName;
     if (name == null) {
       _displayTextInputDialog(context);
     }

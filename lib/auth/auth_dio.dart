@@ -31,6 +31,9 @@ Future<Dio> authDio(BuildContext context) async {
       // 토큰 갱신 요청을 담당할 dio 객체 구현 후 그에 따른 interceptor 정의
       var refreshDio = Dio();
 
+      refreshDio.options.baseUrl = 'http://10.0.2.2:8000/';
+      refreshDio.options.contentType = 'application/json';
+
       refreshDio.interceptors.clear();
 
       refreshDio.interceptors
@@ -48,11 +51,9 @@ Future<Dio> authDio(BuildContext context) async {
         return handler.next(error);
       }));
 
-      // 토큰 갱신 API 요청 시 RefreshToken 포함
-      refreshDio.options.headers['refresh'] = refreshToken;
-
       // 토큰 갱신 API 요청
-      final refreshResponse = await refreshDio.post('auth/token/refresh');
+      final refreshResponse = await refreshDio
+          .post('auth/token/refresh/', data: {'refresh': refreshToken});
 
       // response로부터 새로 갱신된 AccessToken과 RefreshToken 파싱
       final newAccessToken = refreshResponse.headers['access']![0];

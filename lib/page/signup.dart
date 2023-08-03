@@ -5,7 +5,7 @@ import 'package:girlfriend_gpt/services/secure_storage_service.dart';
 import 'package:logger/logger.dart';
 
 import '../services/firebase_service.dart';
-import 'landing.dart';
+import 'home.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -33,11 +33,9 @@ class _SignUpPageState extends State<SignUpPage> {
     super.dispose();
   }
 
-  void goLandingPage() {
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => LandingPage()),
-        (route) => false);
+  void goHomePage() {
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
   }
 
   @override
@@ -106,7 +104,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 await FirebaseService.signUp(email, password);
                                 await SecureStorageService.writeUserInfo(
                                     email, password);
-                                goLandingPage();
+                                goHomePage();
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(content: Text(e.toString())));
@@ -129,7 +127,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     onPressed: () async {
                       await FirebaseService.googleAuthSignIn();
-                      goLandingPage();
+                      goHomePage();
                     }),
               ],
             ),
