@@ -27,21 +27,32 @@ class AuthService {
       // you can reject a `DioError` object eg: return `dio.reject(dioError)`
     }, onError: (error, handler) {
       // Do something with response error
-      return error.response!.data; //continue
+      return handler.next(error); //continue
       // If you want to resolve the request with some custom data，
       // you can resolve a `Response` object eg: return `dio.resolve(response)`.
     }));
+    Response response;
+    try {
+      response = await dio.post(
+        'auth/signin/',
+        data: {'email': email, 'password': password},
+      );
 
-    final response = await dio.post(
-      'auth/signin/',
-      data: {'email': email, 'password': password},
-    );
-    // response로부터 새로 갱신된 AccessToken과 RefreshToken 파싱
-    final accessToken = response.headers['access']![0];
-    final refreshToken = response.headers['refresh']![0];
+      if (response.statusCode == 200) {
+        // response로부터 새로 갱신된 AccessToken과 RefreshToken 파싱
+        final accessToken = response.data['access'];
+        final refreshToken = response.data['refresh'];
 
-    // 기기에 저장된 AccessToken과 RefreshToken 갱신
-    storage.write(key: 'ACCESS_TOKEN', value: accessToken);
-    storage.write(key: 'REFRESH_TOKEN', value: refreshToken);
+        // 기기에 저장된 AccessToken과 RefreshToken 갱신
+        storage.write(key: 'ACCESS_TOKEN', value: accessToken);
+        storage.write(key: 'REFRESH_TOKEN', value: refreshToken);
+
+        return response;
+      }
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401) {
+        return e.response!;
+      }
+    }
   }
 }

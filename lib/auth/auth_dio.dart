@@ -56,12 +56,10 @@ Future<Dio> authDio(BuildContext context) async {
           .post('auth/token/refresh/', data: {'refresh': refreshToken});
 
       // response로부터 새로 갱신된 AccessToken과 RefreshToken 파싱
-      final newAccessToken = refreshResponse.headers['access']![0];
-      final newRefreshToken = refreshResponse.headers['refresh']![0];
+      final newAccessToken = refreshResponse.data['access'];
 
       // 기기에 저장된 AccessToken과 RefreshToken 갱신
       await storage.write(key: 'ACCESS_TOKEN', value: newAccessToken);
-      await storage.write(key: 'REFRESH_TOKEN', value: newRefreshToken);
 
       // AccessToken의 만료로 수행하지 못했던 API 요청에 담겼던 AccessToken 갱신
       error.requestOptions.headers['Authorization'] = 'Bearer $newAccessToken';

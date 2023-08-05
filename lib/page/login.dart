@@ -53,10 +53,13 @@ class _LoginPageState extends State<LoginPage> {
     String password = _passwordController.text;
 
     if (_formKey.currentState!.validate()) {
-      final data = await AuthService.login(context, email, password);
-      // if (response.statusCode == 200) {
-      //   goHomePage();
-      // }
+      final response = await AuthService.login(context, email, password);
+      if (response.statusCode == 200) {
+        goHomePage();
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(response.data['messages'])));
+      }
     } else {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('유효하지 않은 값을 고쳐주세요.')));
