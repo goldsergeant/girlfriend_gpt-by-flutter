@@ -55,4 +55,15 @@ class AuthService {
       }
     }
   }
+
+  static getUserInfo(BuildContext context) async {
+    Dio dio = await authDio(context);
+    final response = await dio.get('auth/user/info/');
+    return response;
+  }
+
+  static updateUserName(context, String name) async {
+    var dio = await authDio(context);
+    dio.put('auth/user/name/', data: {'name': name});
+  }
 }

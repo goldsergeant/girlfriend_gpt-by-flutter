@@ -1,7 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:girlfriend_gpt/auth/auth_dio.dart';
 import 'package:girlfriend_gpt/page/before_chat.dart';
 import 'package:girlfriend_gpt/page/user_profile.dart';
+import 'package:girlfriend_gpt/services/auth_service.dart';
 
 import '../services/firebase_service.dart';
 
@@ -54,10 +57,10 @@ class _HomePageState extends State<HomePage> {
             ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    await FirebaseService.updateProfileName(
-                        _dialogTextFieldController.text);
-                    _dialogTextFieldController.dispose();
+                    await AuthService.updateUserName(
+                        context, _dialogTextFieldController.text);
                     Navigator.pop(context);
+                    _dialogTextFieldController.dispose();
                   }
                 },
                 child: Text('입력')),
@@ -68,17 +71,24 @@ class _HomePageState extends State<HomePage> {
   }
 
   _buildDialogByUserData(BuildContext context) async {
-    String? name = FirebaseService.getUser()?.displayName;
-    if (name == null) {
+    Response response = await AuthService.getUserInfo(context);
+    String name = response.data['name'];
+    if (name == "") {
       _displayTextInputDialog(context);
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    // TODO: implement initState
+    super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _buildDialogByUserData(context);
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: _widgetOptions.elementAt(_selectedIndex),
