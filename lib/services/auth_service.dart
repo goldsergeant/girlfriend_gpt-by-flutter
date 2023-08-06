@@ -5,10 +5,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../auth/auth_dio.dart';
 
 class AuthService {
-  static Future login(
-      BuildContext context, String email, String password) async {
+  static Future login(String email, String password) async {
     var dio = Dio();
-    dio.options.baseUrl = 'http://10.0.2.2:8000/';
+    dio.options.baseUrl = 'http://127.0.0.1:8000/';
     dio.options.contentType = 'application/json';
 
     final storage = FlutterSecureStorage();
@@ -50,9 +49,47 @@ class AuthService {
         return response;
       }
     } on DioException catch (e) {
-      if (e.response?.statusCode == 401) {
-        return e.response!;
+      return e.response;
+    }
+  }
+
+  static Future signUp(String email, String password) async {
+    var dio = Dio();
+    dio.options.baseUrl = 'http://127.0.0.1:8000/';
+    dio.options.contentType = 'application/json';
+
+    dio.interceptors.clear();
+
+    dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
+      return handler.next(options); //continue
+      // If you want to resolve the request with some custom data，
+      // you can resolve a `Response` object eg: return `dio.resolve(response)`.
+      // If you want to reject the request with a error message,
+      // you can reject a `DioError` object eg: return `dio.reject(dioError)`
+    }, onResponse: (response, handler) {
+      // Do something with response data
+      return handler.next(response); // continue
+      // If you want to reject the request with a error message,
+      // you can reject a `DioError` object eg: return `dio.reject(dioError)`
+    }, onError: (error, handler) {
+      // Do something with response error
+      return handler.next(error); //continue
+      // If you want to resolve the request with some custom data，
+      // you can resolve a `Response` object eg: return `dio.resolve(response)`.
+    }));
+    Response response;
+    try {
+      response = await dio.post(
+        'auth/signup/',
+        data: {'email': email, 'password': password},
+      );
+
+      if (response.statusCode == 201) {
+        // response로부터 새로 갱신된 AccessToken과 RefreshToken 파싱
+        return response;
       }
+    } on DioException catch (e) {
+      return e.response;
     }
   }
 

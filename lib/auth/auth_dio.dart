@@ -7,7 +7,7 @@ import 'package:girlfriend_gpt/page/login.dart';
 
 Future<Dio> authDio(BuildContext context) async {
   var dio = Dio();
-  dio.options.baseUrl = 'http://10.0.2.2:8000/';
+  dio.options.baseUrl = 'http://127.0.0.1:8000/';
   dio.options.contentType = 'application/json';
 
   final storage = FlutterSecureStorage();
@@ -31,7 +31,7 @@ Future<Dio> authDio(BuildContext context) async {
       // 토큰 갱신 요청을 담당할 dio 객체 구현 후 그에 따른 interceptor 정의
       var refreshDio = Dio();
 
-      refreshDio.options.baseUrl = 'http://10.0.2.2:8000/';
+      refreshDio.options.baseUrl = 'http://127.0.0.1:8000/';
       refreshDio.options.contentType = 'application/json';
 
       refreshDio.interceptors.clear();

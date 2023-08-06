@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
     String password = _passwordController.text;
 
     if (_formKey.currentState!.validate()) {
-      final response = await AuthService.login(context, email, password);
+      final response = await AuthService.login(email, password);
       if (response.statusCode == 200) {
         goHomePage();
       } else {

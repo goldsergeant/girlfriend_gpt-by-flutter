@@ -13,9 +13,9 @@ Future<void> main() async {
   OpenAI.apiKey = Env.apiKey;
   WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
 
   String? userInfo = await SecureStorageService.readUserInfo();
 

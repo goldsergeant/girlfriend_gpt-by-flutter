@@ -1,6 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:girlfriend_gpt/page/login.dart';
+import 'package:girlfriend_gpt/services/auth_service.dart';
 import 'package:girlfriend_gpt/services/secure_storage_service.dart';
 import 'package:logger/logger.dart';
 
@@ -33,9 +36,9 @@ class _SignUpPageState extends State<SignUpPage> {
     super.dispose();
   }
 
-  void goHomePage() {
+  void goLoginPage() {
     Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
+        MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
   }
 
   @override
@@ -100,14 +103,17 @@ class _SignUpPageState extends State<SignUpPage> {
                             String password = _passwordController.text;
 
                             if (_formKey.currentState!.validate()) {
-                              try {
-                                await FirebaseService.signUp(email, password);
-                                await SecureStorageService.writeUserInfo(
-                                    email, password);
-                                goHomePage();
-                              } catch (e) {
+                              final response =
+                                  await AuthService.signUp(email, password);
+                              if (response.statusCode == 201) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(e.toString())));
+                                    SnackBar(content: Text('회원가입 성공')));
+                                goLoginPage();
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content:
+                                            Text(response.data['detail'])));
                               }
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -126,8 +132,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       google_image_path,
                     ),
                     onPressed: () async {
-                      await FirebaseService.googleAuthSignIn();
-                      goHomePage();
+                      goLoginPage();
                     }),
               ],
             ),
