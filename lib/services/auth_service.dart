@@ -53,7 +53,7 @@ class AuthService {
     }
   }
 
-  static Future signUp(String email, String password) async {
+  static Future signUp(String email, String name, String password) async {
     var dio = Dio();
     dio.options.baseUrl = 'http://127.0.0.1:8000/';
     dio.options.contentType = 'application/json';
@@ -81,7 +81,7 @@ class AuthService {
     try {
       response = await dio.post(
         'auth/signup/',
-        data: {'email': email, 'password': password},
+        data: {'email': email, 'name': name, 'password': password},
       );
 
       if (response.statusCode == 201) {

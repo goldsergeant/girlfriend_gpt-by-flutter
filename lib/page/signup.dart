@@ -27,6 +27,7 @@ class _SignUpPageState extends State<SignUpPage> {
   );
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
 
   @override
   void dispose() {
@@ -85,6 +86,19 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         SizedBox(height: 12.0),
                         TextFormField(
+                          controller: _nameController,
+                          decoration: InputDecoration(
+                            labelText: 'name',
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'input name';
+                            } else
+                              return null;
+                          },
+                        ),
+                        SizedBox(height: 12.0),
+                        TextFormField(
                           controller: _passwordController,
                           decoration: InputDecoration(
                             labelText: 'Password',
@@ -100,11 +114,12 @@ class _SignUpPageState extends State<SignUpPage> {
                         ElevatedButton(
                           onPressed: () async {
                             String email = _emailController.text;
+                            String name = _nameController.text;
                             String password = _passwordController.text;
 
                             if (_formKey.currentState!.validate()) {
-                              final response =
-                                  await AuthService.signUp(email, password);
+                              final response = await AuthService.signUp(
+                                  email, name, password);
                               if (response.statusCode == 201) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(content: Text('회원가입 성공')));
