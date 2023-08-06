@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:girlfriend_gpt/page/home.dart';
-import 'package:girlfriend_gpt/page/login.dart';
 import 'package:girlfriend_gpt/services/firebase_service.dart';
 import 'package:girlfriend_gpt/services/secure_storage_service.dart';
+import 'auth/page/login.dart';
 import 'env/env.dart';
 import 'package:dart_openai/dart_openai.dart';
 

@@ -3,7 +3,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:girlfriend_gpt/page/login.dart';
+import 'package:girlfriend_gpt/auth/page/login.dart';
 
 Future<Dio> authDio(BuildContext context) async {
   var dio = Dio();

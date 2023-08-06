@@ -2,13 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:girlfriend_gpt/page/login.dart';
 import 'package:girlfriend_gpt/services/auth_service.dart';
 import 'package:girlfriend_gpt/services/secure_storage_service.dart';
 import 'package:logger/logger.dart';
 
-import '../services/firebase_service.dart';
-import 'home.dart';
+import 'login.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});

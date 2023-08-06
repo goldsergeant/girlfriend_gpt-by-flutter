@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:girlfriend_gpt/page/girlfriend_chat.dart';
 import 'package:girlfriend_gpt/main.dart';
-import 'package:girlfriend_gpt/page/boyfriend_chat.dart';
+
+import '../../chat/page/boyfriend_chat.dart';
+import '../../chat/page/girlfriend_chat.dart';
 
 class BeforeChatPage extends StatelessWidget {
   BeforeChatPage({super.key});
