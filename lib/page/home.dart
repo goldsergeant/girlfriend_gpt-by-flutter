@@ -82,6 +82,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _buildDialogByUserData(context);
+    });
   }
 
   @override

@@ -145,6 +145,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 IconButton(
                     icon: SvgPicture.asset(
                       google_image_path,
+                      fit: BoxFit.fill,
                     ),
                     onPressed: () async {
                       goLoginPage();
