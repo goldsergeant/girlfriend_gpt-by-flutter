@@ -38,45 +38,45 @@ class _HomePageState extends State<HomePage> {
     return null;
   }
 
-  // Future<void> _displayTextInputDialog(BuildContext context) async {
-  //   return showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (context) {
-  //       return AlertDialog(
-  //         title: Text('닉네임'),
-  //         content: Form(
-  //           key: _formKey,
-  //           child: TextFormField(
-  //             validator: _validator,
-  //             controller: _dialogTextFieldController,
-  //             decoration: InputDecoration(hintText: "닉네임"),
-  //           ),
-  //         ),
-  //         actions: [
-  //           ElevatedButton(
-  //               onPressed: () async {
-  //                 if (_formKey.currentState!.validate()) {
-  //                   await AuthService.updateUserName(
-  //                       context, _dialogTextFieldController.text);
-  //                   Navigator.pop(context);
-  //                   _dialogTextFieldController.dispose();
-  //                 }
-  //               },
-  //               child: Text('입력')),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
+  Future<void> _displayTextInputDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('닉네임'),
+          content: Form(
+            key: _formKey,
+            child: TextFormField(
+              validator: _validator,
+              controller: _dialogTextFieldController,
+              decoration: InputDecoration(hintText: "닉네임"),
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    await AuthService.updateUserName(
+                        context, _dialogTextFieldController.text);
+                    Navigator.pop(context);
+                    _dialogTextFieldController.dispose();
+                  }
+                },
+                child: Text('입력')),
+          ],
+        );
+      },
+    );
+  }
 
-  // _buildDialogByUserData(BuildContext context) async {
-  //   Response response = await AuthService.getUserInfo(context);
-  //   String name = response.data['name'];
-  //   if (name == "") {
-  //     _displayTextInputDialog(context);
-  //   }
-  // }
+  _buildDialogByUserData(BuildContext context) async {
+    Response response = await AuthService.getUserInfo(context);
+    String name = response.data['name'];
+    if (name == "") {
+      _displayTextInputDialog(context);
+    }
+  }
 
   @override
   void initState() {
