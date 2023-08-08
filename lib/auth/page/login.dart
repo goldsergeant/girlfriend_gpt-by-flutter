@@ -151,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                       fit: BoxFit.scaleDown,
                     ),
                     onPressed: () async {
-                      showGoogleModal(context);
+                      await AuthService.googleLogin();
                       // goHomePage();
                     }),
               ],

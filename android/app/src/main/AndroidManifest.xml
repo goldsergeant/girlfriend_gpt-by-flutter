@@ -2,7 +2,18 @@
     <application
         android:label="girlfriend_gpt"
         android:name="${applicationName}"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
+         <activity
+      android:name="com.linusu.flutter_web_auth_2.CallbackActivity"
+      android:exported="true">
+      <intent-filter android:label="flutter_web_auth_2">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="YOUR_CALLBACK_URL_SCHEME_HERE" />
+      </intent-filter>
+    </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"
