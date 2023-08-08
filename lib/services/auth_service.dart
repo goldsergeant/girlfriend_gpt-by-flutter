@@ -1,15 +1,20 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-
+import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
+import 'package:http/http.dart' as http;
 import '../auth/auth_dio.dart';
+import '../env/env.dart';
 
 class AuthService {
+  static String BASEURL = "http://127.0.0.1:8000/";
+  static String CONTENTTYPE = "application/json";
   static Future login(String email, String password) async {
     var dio = Dio();
-    dio.options.baseUrl = 'http://127.0.0.1:8000/';
-    dio.options.contentType = 'application/json';
+    dio.options.baseUrl = BASEURL;
+    dio.options.contentType = CONTENTTYPE;
 
     final storage = FlutterSecureStorage();
     dio.interceptors.clear();
@@ -103,5 +108,35 @@ class AuthService {
   static updateUserName(context, String name) async {
     var dio = await authDio(context);
     dio.put('auth/user/name/', data: {'name': name});
+  }
+
+  static googleLogin() async {
+    // 고유한 redirect uri
+    const APP_REDIRECT_URI = "girlfriend-gpt";
+
+    // Construct the url
+    final url = Uri.https('accounts.google.com', '/o/oauth2/v2/auth', {
+      'response_type': 'code',
+      'client_id': Env.googleClientId,
+      'redirect_uri': '$APP_REDIRECT_URI:/',
+      'scope': 'https://www.googleapis.com/auth/userinfo.email',
+    });
+
+// Present the dialog to the user
+    final result = await FlutterWebAuth2.authenticate(
+        url: url.toString(), callbackUrlScheme: APP_REDIRECT_URI);
+
+// Extract code from resulting url
+    final code = Uri.parse(result).queryParameters['code'];
+
+// Construct an Uri to Google's oauth2 endpoint
+    final url2 =
+        Uri.https('localhost:8000', 'auth/google/callback/', {'code': code});
+
+// Use this code to get an access token
+    final response = await http.get(url2);
+
+// Get the access token from the response
+    final accessToken = jsonDecode(response.body)['access_token'] as String;
   }
 }
