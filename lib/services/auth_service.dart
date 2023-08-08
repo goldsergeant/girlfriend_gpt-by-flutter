@@ -109,22 +109,22 @@ class AuthService {
     dio.put('auth/user/name/', data: {'name': name});
   }
 
-  static googleLogin() async {
-    // 백엔드에서 미리 작성된 API 호출
-    final url =
-        Uri.parse('${BASEURL}auth/google/login/?redirect-uri=girlfriend-gpt');
+  // static googleLogin() async {
+  //   // 백엔드에서 미리 작성된 API 호출
+  //   final url =
+  //       Uri.parse('${BASEURL}auth/google/login/?redirect-uri=girlfriend-gpt');
 
-    // 백엔드가 제공한 로그인 페이지에서 로그인 후 callback 데이터 반환
-    final result = await FlutterWebAuth2.authenticate(
-        url: url.toString(), callbackUrlScheme: 'girlfriend-gpt');
+  //   // 백엔드가 제공한 로그인 페이지에서 로그인 후 callback 데이터 반환
+  //   final result = await FlutterWebAuth2.authenticate(
+  //       url: url.toString(), callbackUrlScheme: 'girlfriend-gpt');
 
-    // 백엔드에서 redirect한 callback 데이터 파싱
-    final accessToken = Uri.parse(result).queryParameters['access'];
-    final refreshToken = Uri.parse(result).queryParameters['refresh'];
+  //   // 백엔드에서 redirect한 callback 데이터 파싱
+  //   final accessToken = Uri.parse(result).queryParameters['access'];
+  //   final refreshToken = Uri.parse(result).queryParameters['refresh'];
 
-    // . . .
-    // FlutterSecureStorage 또는 SharedPreferences 를 통한
-    // Token 저장 및 관리
-    // . . .
-  }
+  //   // . . .
+  //   // FlutterSecureStorage 또는 SharedPreferences 를 통한
+  //   // Token 저장 및 관리
+  //   // . . .
+  // }
 }
