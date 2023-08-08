@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:girlfriend_gpt/auth/auth_dio.dart';
 import 'package:girlfriend_gpt/auth/page/signup.dart';
+import 'package:girlfriend_gpt/auth/widget/google_login_widget.dart';
 import 'package:girlfriend_gpt/home/page/home.dart';
 import 'package:girlfriend_gpt/services/auth_service.dart';
 import 'package:girlfriend_gpt/services/secure_storage_service.dart';
@@ -150,6 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                       fit: BoxFit.scaleDown,
                     ),
                     onPressed: () async {
+                      showGoogleModal(context);
                       // goHomePage();
                     }),
               ],
