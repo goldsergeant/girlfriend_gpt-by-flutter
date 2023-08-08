@@ -7,4 +7,6 @@ abstract class Env {
   static const String apiKey = _Env.apiKey;
   @EnviedField(varName: 'SOCIAL_AUTH_GOOGLE_CLIENT_ID')
   static const String googleClientId = _Env.googleClientId;
+  @EnviedField(varName: 'SOCIAL_AUTH_GOOGLE_SECRET')
+  static const String googleSecret = _Env.googleSecret;
 }
