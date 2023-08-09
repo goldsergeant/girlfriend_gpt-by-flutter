@@ -48,7 +48,7 @@ class _BoyfriendChatPageState extends State<BoyfriendChatPage> {
     _addMessage(myBubble);
 
     _textController.text = '';
-    String response = await OpenAiService.sendToBoyfriend(message);
+    String response = await OpenAiService.sendToBoyfriend(context, message);
 
     BubbleSpecialOne boyfriendBubble = BubbleSpecialOne(
       text: response,
