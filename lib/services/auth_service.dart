@@ -6,7 +6,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 import 'package:http/http.dart' as http;
 import '../auth/auth_dio.dart';
-import '../env/env.dart';
 
 class AuthService {
   static String BASEURL = "http://127.0.0.1:8000/";
@@ -110,33 +109,22 @@ class AuthService {
     dio.put('auth/user/name/', data: {'name': name});
   }
 
-  static googleLogin() async {
-    // 고유한 redirect uri
-    const APP_REDIRECT_URI = "girlfriend-gpt";
+  // static googleLogin() async {
+  //   // 백엔드에서 미리 작성된 API 호출
+  //   final url =
+  //       Uri.parse('${BASEURL}auth/google/login/?redirect-uri=girlfriend-gpt');
 
-    // Construct the url
-    final url = Uri.https('accounts.google.com', '/o/oauth2/v2/auth', {
-      'response_type': 'code',
-      'client_id': Env.googleClientId,
-      'redirect_uri': '$APP_REDIRECT_URI:/',
-      'scope': 'https://www.googleapis.com/auth/userinfo.email',
-    });
+  //   // 백엔드가 제공한 로그인 페이지에서 로그인 후 callback 데이터 반환
+  //   final result = await FlutterWebAuth2.authenticate(
+  //       url: url.toString(), callbackUrlScheme: 'girlfriend-gpt');
 
-// Present the dialog to the user
-    final result = await FlutterWebAuth2.authenticate(
-        url: url.toString(), callbackUrlScheme: APP_REDIRECT_URI);
+  //   // 백엔드에서 redirect한 callback 데이터 파싱
+  //   final accessToken = Uri.parse(result).queryParameters['access'];
+  //   final refreshToken = Uri.parse(result).queryParameters['refresh'];
 
-// Extract code from resulting url
-    final code = Uri.parse(result).queryParameters['code'];
-
-// Construct an Uri to Google's oauth2 endpoint
-    final url2 =
-        Uri.https('localhost:8000', 'auth/google/callback/', {'code': code});
-
-// Use this code to get an access token
-    final response = await http.get(url2);
-
-// Get the access token from the response
-    final accessToken = jsonDecode(response.body)['access_token'] as String;
-  }
+  //   // . . .
+  //   // FlutterSecureStorage 또는 SharedPreferences 를 통한
+  //   // Token 저장 및 관리
+  //   // . . .
+  // }
 }

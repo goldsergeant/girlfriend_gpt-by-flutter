@@ -1,13 +1,9 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:girlfriend_gpt/auth/auth_dio.dart';
 import 'package:girlfriend_gpt/auth/page/signup.dart';
 import 'package:girlfriend_gpt/home/page/home.dart';
 import 'package:girlfriend_gpt/services/auth_service.dart';
-import 'package:girlfriend_gpt/services/secure_storage_service.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 
 class LoginPage extends StatefulWidget {
@@ -150,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                       fit: BoxFit.scaleDown,
                     ),
                     onPressed: () async {
-                      await AuthService.googleLogin();
+                      // await AuthService.googleLogin();
                       // goHomePage();
                     }),
               ],
