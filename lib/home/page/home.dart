@@ -1,11 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:girlfriend_gpt/auth/auth_dio.dart';
+import 'package:girlfriend_gpt/home/page/character_list.dart';
 import 'package:girlfriend_gpt/home/page/user_profile.dart';
 import 'package:girlfriend_gpt/services/auth_service.dart';
-
-import '../../services/firebase_service.dart';
 import 'before_chat.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,7 +18,8 @@ class _HomePageState extends State<HomePage> {
   final _dialogTextFieldController = TextEditingController();
 
   final List<Widget> _widgetOptions = <Widget>[
-    BeforeChatPage(),
+    CharacterListPage(),
+    // BeforeChatPage(),
     UserProfilePage()
   ];
 
@@ -71,8 +69,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   _buildDialogByUserData(BuildContext context) async {
-    Response response = await AuthService.getUserInfo(context);
-    String name = response.data['name'];
+    Response? response = await AuthService.getUserInfo(context);
+    String name = response?.data['name'] ?? '';
     if (name == "") {
       _displayTextInputDialog(context);
     }

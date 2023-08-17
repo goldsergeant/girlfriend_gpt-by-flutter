@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:girlfriend_gpt/main.dart';
-import 'package:girlfriend_gpt/services/openai_service.dart';
+import 'package:girlfriend_gpt/chat/service/chat_service.dart';
 
 class CharlesChatPage extends StatefulWidget {
   CharlesChatPage({Key? key}) : super(key: key);
@@ -48,7 +48,7 @@ class _CharlesChatPageState extends State<CharlesChatPage> {
     _addMessage(myBubble);
 
     _textController.text = '';
-    String response = await OpenAiService.sendToCharles(context, message);
+    String response = await ChatService.sendToCharles(context, message);
 
     BubbleSpecialOne boyfriendBubble = BubbleSpecialOne(
       text: response,

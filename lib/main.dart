@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:girlfriend_gpt/home/page/home.dart';
 import 'package:girlfriend_gpt/services/firebase_service.dart';
 import 'package:girlfriend_gpt/services/secure_storage_service.dart';
 import 'auth/page/login.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:girlfriend_gpt/main.dart';
-import 'package:girlfriend_gpt/services/openai_service.dart';
+import 'package:girlfriend_gpt/chat/service/chat_service.dart';
 
 class MikaChatPage extends StatefulWidget {
   MikaChatPage({Key? key}) : super(key: key);
@@ -45,7 +45,7 @@ class _MikaChatPageState extends State<MikaChatPage> {
 
     _addMessage(myBubble);
     _textController.text = '';
-    String response = await OpenAiService.sendToMika(context, message);
+    String response = await ChatService.sendToMika(context, message);
 
     BubbleSpecialOne girlfriendBubble = BubbleSpecialOne(
       text: response,
