@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:girlfriend_gpt/home/service/character_service.dart';
+import 'package:girlfriend_gpt/home/widget/character_tile.dart';
 
 class CharacterListPage extends StatelessWidget {
   const CharacterListPage({super.key});
@@ -9,18 +10,22 @@ class CharacterListPage extends StatelessWidget {
         future: CharacterService().getCharacterList(context),
         builder: ((context, snapshot) {
           if (snapshot.hasData == false) {
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           } //error가 발생하게 될 경우 반환하게 되는 부분
           else if (snapshot.hasError) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 'Error: ${snapshot.error}',
-                style: TextStyle(fontSize: 15),
               ),
             );
           } else {
-            return Text('성공');
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                characterListTile(snapshot.data![index]);
+              },
+            );
           }
         }));
   }
