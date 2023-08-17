@@ -23,7 +23,7 @@ class CharacterListPage extends StatelessWidget {
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                characterListTile(snapshot.data![index]);
+                return characterListTile(snapshot.data![index]);
               },
             );
           }
