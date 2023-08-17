@@ -3,18 +3,18 @@ import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:girlfriend_gpt/main.dart';
 import 'package:girlfriend_gpt/services/openai_service.dart';
 
-class GirlfriendChatPage extends StatefulWidget {
-  GirlfriendChatPage({Key? key}) : super(key: key);
+class MikaChatPage extends StatefulWidget {
+  MikaChatPage({Key? key}) : super(key: key);
 
   @override
-  _GirlfriendChatPageState createState() => _GirlfriendChatPageState();
+  _MikaChatPageState createState() => _MikaChatPageState();
 }
 
-class _GirlfriendChatPageState extends State<GirlfriendChatPage> {
+class _MikaChatPageState extends State<MikaChatPage> {
   final now = new DateTime.now();
   final String name = '미카';
 
-  static const String GIRLFRIEND_IMAGE_PATH = "assets/images/cuty_any_girl.jpg";
+  static const String GIRLFRIEND_IMAGE_PATH = "assets/images/cuty_ani_girl.jpg";
   List<Widget> _messages = [];
   TextEditingController _textController = TextEditingController();
   FocusNode _focusNode = FocusNode();
@@ -45,7 +45,7 @@ class _GirlfriendChatPageState extends State<GirlfriendChatPage> {
 
     _addMessage(myBubble);
     _textController.text = '';
-    String response = await OpenAiService.sendToGirlfriend(context, message);
+    String response = await OpenAiService.sendToMika(context, message);
 
     BubbleSpecialOne girlfriendBubble = BubbleSpecialOne(
       text: response,

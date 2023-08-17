@@ -5,14 +5,14 @@ import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:girlfriend_gpt/main.dart';
 import 'package:girlfriend_gpt/services/openai_service.dart';
 
-class BoyfriendChatPage extends StatefulWidget {
-  BoyfriendChatPage({Key? key}) : super(key: key);
+class CharlesChatPage extends StatefulWidget {
+  CharlesChatPage({Key? key}) : super(key: key);
 
   @override
-  _BoyfriendChatPageState createState() => _BoyfriendChatPageState();
+  _CharlesChatPageState createState() => _CharlesChatPageState();
 }
 
-class _BoyfriendChatPageState extends State<BoyfriendChatPage> {
+class _CharlesChatPageState extends State<CharlesChatPage> {
   final now = new DateTime.now();
   final String name = '찰스';
 
@@ -48,7 +48,7 @@ class _BoyfriendChatPageState extends State<BoyfriendChatPage> {
     _addMessage(myBubble);
 
     _textController.text = '';
-    String response = await OpenAiService.sendToBoyfriend(context, message);
+    String response = await OpenAiService.sendToCharles(context, message);
 
     BubbleSpecialOne boyfriendBubble = BubbleSpecialOne(
       text: response,

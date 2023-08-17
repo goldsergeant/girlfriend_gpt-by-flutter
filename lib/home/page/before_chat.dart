@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:girlfriend_gpt/main.dart';
 
-import '../../chat/page/boyfriend_chat.dart';
-import '../../chat/page/girlfriend_chat.dart';
+import '../../chat/page/charles_chat.dart';
+import '../../chat/page/mika_chat.dart';
 
 class BeforeChatPage extends StatelessWidget {
   BeforeChatPage({super.key});
 
   static const String BOYFRIEND_IMAGE_PATH = "assets/images/gym_rat_man.jpg";
-  static const String GIRLFRIEND_IMAGE_PATH = "assets/images/cuty_any_girl.jpg";
+  static const String GIRLFRIEND_IMAGE_PATH = "assets/images/cuty_ani_girl.jpg";
 
   Widget boyFriendButton() {
     String title = '나만 바라봐주는 남자친구';
     return FittedBox(
         child: InkWell(
       onTap: () => Navigator.push(navigatorKey.currentState!.context,
-          MaterialPageRoute(builder: (context) => BoyfriendChatPage())),
+          MaterialPageRoute(builder: (context) => CharlesChatPage())),
       child: Column(children: [
         Image.asset(
           BOYFRIEND_IMAGE_PATH,
@@ -32,7 +32,7 @@ class BeforeChatPage extends StatelessWidget {
     return FittedBox(
         child: InkWell(
       onTap: () => Navigator.push(navigatorKey.currentState!.context,
-          MaterialPageRoute(builder: (context) => GirlfriendChatPage())),
+          MaterialPageRoute(builder: (context) => MikaChatPage())),
       child: Column(children: [
         Image.asset(
           GIRLFRIEND_IMAGE_PATH,

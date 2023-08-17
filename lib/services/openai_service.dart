@@ -13,12 +13,12 @@ class OpenAiService {
     output: null, // Use the default LogOutput (-> send everything to console)
   );
 
-  static sendToGirlfriend(BuildContext context, String message) async {
+  static sendToMika(BuildContext context, String message) async {
     var data = '';
     try {
       var dio = await authDio(context);
-      final response = await dio
-          .post('chat/girlfriend/message/', data: {'content': message});
+      final response =
+          await dio.post('chat/mika/message/', data: {'content': message});
       data = response.data['message'];
     } on DioException catch (e) {
       logger.w(e.message);
@@ -27,12 +27,12 @@ class OpenAiService {
     return data;
   }
 
-  static sendToBoyfriend(BuildContext context, String message) async {
+  static sendToCharles(BuildContext context, String message) async {
     var data = '';
     try {
       var dio = await authDio(context);
       final response =
-          await dio.post('chat/boyfriend/message/', data: {'content': message});
+          await dio.post('chat/charles/message/', data: {'content': message});
       data = response.data['message'];
     } on DioException catch (e) {
       logger.w(e.message);
