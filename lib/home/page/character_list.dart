@@ -23,8 +23,11 @@ class CharacterListPage extends StatelessWidget {
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                return characterListTile(snapshot.data![index]);
+                return Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: characterListTile(snapshot.data![index]));
               },
+              padding: EdgeInsets.all(12.0),
             );
           }
         }));
