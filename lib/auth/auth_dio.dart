@@ -16,19 +16,18 @@ Future<Dio> authDio(BuildContext context) async {
 
   dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) async {
     // 기기에 저장된 AccessToken 로드
-    String accessToken = await storage.read(key: 'ACCESS_TOKEN') ?? "not_blank";
+    String? accessToken = await storage.read(key: 'ACCESS_TOKEN');
 
     // 매 요청마다 헤더에 AccessToken을 포함
-    options.headers['Authorization'] = 'Bearer $accessToken';
+    if (accessToken != null)
+      options.headers['Authorization'] = 'Bearer $accessToken';
     return handler.next(options);
   }, onError: (error, handler) async {
     // 인증 오류가 발생했을 경우: AccessToken의 만료
     if (error.response?.statusCode == 401) {
       // 기기에 저장된 AccessToken과 RefreshToken 로드
-      String accessToken =
-          await storage.read(key: 'ACCESS_TOKEN') ?? 'not_blank';
-      String refreshToken =
-          await storage.read(key: 'REFRESH_TOKEN') ?? 'not_blank';
+      String? accessToken = await storage.read(key: 'ACCESS_TOKEN');
+      String? refreshToken = await storage.read(key: 'REFRESH_TOKEN');
 
       // 토큰 갱신 요청을 담당할 dio 객체 구현 후 그에 따른 interceptor 정의
       var refreshDio = Dio();

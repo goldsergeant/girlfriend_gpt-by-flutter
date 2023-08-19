@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
               fontSize: 30, fontStyle: FontStyle.italic, color: mainColor),
         ),
       ),
-      home: LoginPage(),
+      home: HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
