@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:girlfriend_gpt/chat/page/chatting_page.dart';
 
 import '../service/character_service.dart';
 import 'character_tile.dart';
@@ -21,9 +22,18 @@ Widget characterListView(BuildContext context) {
           return ListView.builder(
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
-              return Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: characterListTile(snapshot.data![index]));
+              return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ChattingPage(character: snapshot.data![index]),
+                        ));
+                  },
+                  child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: characterListTile(snapshot.data![index])));
             },
             padding: EdgeInsets.all(12.0),
           );

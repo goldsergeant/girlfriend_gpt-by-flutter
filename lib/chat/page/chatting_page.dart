@@ -1,32 +1,28 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
+import 'package:girlfriend_gpt/home/model/character.dart';
 import 'package:girlfriend_gpt/main.dart';
 import 'package:girlfriend_gpt/chat/service/chat_service.dart';
 
-class CharlesChatPage extends StatefulWidget {
-  CharlesChatPage({Key? key}) : super(key: key);
+class ChattingPage extends StatefulWidget {
+  Character character;
+  ChattingPage({Key? key, required this.character}) : super(key: key);
 
   @override
-  _CharlesChatPageState createState() => _CharlesChatPageState();
+  _ChattingPageState createState() => _ChattingPageState();
 }
 
-class _CharlesChatPageState extends State<CharlesChatPage> {
-  final now = new DateTime.now();
-  final String name = '찰스';
-
-  static const String BOYFRIEND_IMAGE_PATH = "assets/images/gym_rat_man.jpg";
+class _ChattingPageState extends State<ChattingPage> {
   List<Widget> _messages = [];
   TextEditingController _textController = TextEditingController();
   FocusNode _focusNode = FocusNode();
   ScrollController _scrollController = ScrollController();
 
-  _buildBoyfriendImage() {
+  _buildImage(String imagePath) {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 5.0),
-        child: Image.asset(
-          BOYFRIEND_IMAGE_PATH,
+        child: Image.network(
+          imagePath,
           width: 50,
           height: 50,
         ));
@@ -34,7 +30,7 @@ class _CharlesChatPageState extends State<CharlesChatPage> {
 
   _sendMessage(String message) async {
     if (_messages.isEmpty) {
-      _addMessage(DateChip(date: now));
+      _addMessage(DateChip(date: DateTime.now()));
     }
 
     BubbleNormal myBubble = BubbleNormal(
@@ -48,9 +44,10 @@ class _CharlesChatPageState extends State<CharlesChatPage> {
     _addMessage(myBubble);
 
     _textController.text = '';
-    String response = await ChatService.sendToCharles(context, message);
+    String response = await ChatService()
+        .sendToLover(context, widget.character.sendUrl!, message);
 
-    BubbleSpecialOne boyfriendBubble = BubbleSpecialOne(
+    BubbleSpecialOne loverBubble = BubbleSpecialOne(
       text: response,
       isSender: false,
       tail: true,
@@ -61,10 +58,10 @@ class _CharlesChatPageState extends State<CharlesChatPage> {
     _addMessage(Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildBoyfriendImage(),
+        _buildImage(widget.character.image!),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [Text(name), boyfriendBubble],
+          children: [Text(widget.character.name!), loverBubble],
         )
       ],
     ));
@@ -156,7 +153,7 @@ class _CharlesChatPageState extends State<CharlesChatPage> {
         child: Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
-              title: Text('나만 바라봐주는 남자친구'),
+              title: Text(widget.character.name!),
               centerTitle: true,
             ),
             body: Stack(
