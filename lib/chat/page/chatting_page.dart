@@ -45,7 +45,7 @@ class _ChattingPageState extends State<ChattingPage> {
 
     _textController.text = '';
     String response = await ChatService()
-        .sendToLover(context, widget.character.sendUrl!, message);
+        .sendToLover(context, 'chat/${widget.character.id}/message/', message);
 
     BubbleSpecialOne loverBubble = BubbleSpecialOne(
       text: response,
