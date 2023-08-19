@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:girlfriend_gpt/home/page/character_list.dart';
 import 'package:girlfriend_gpt/home/page/user_profile.dart';
 import 'package:girlfriend_gpt/services/auth_service.dart';
-import 'before_chat.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
