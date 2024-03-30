@@ -1,16 +1,8 @@
 # girlfriend_gpt
 
-A new Flutter project.
+챗GPT에 적절한 프롬프트를 입력하여 애인처럼 대답하는 어플
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 앱 화면
+<img src="https://github.com/goldsergeant/girlfriend_gpt-by-flutter/assets/94740533/1d9cd2f1-d18d-432c-b022-cdf5bd74b5c1">
+<img src="https://github.com/goldsergeant/girlfriend_gpt-by-flutter/assets/94740533/18cee566-da75-4ba2-851a-fad0b83a2d56">
+<img src="https://github.com/goldsergeant/girlfriend_gpt-by-flutter/assets/94740533/52f019fa-511c-47ef-86cc-accaf6354f7b">
